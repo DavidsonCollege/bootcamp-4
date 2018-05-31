@@ -22,14 +22,6 @@ router.get("/uncompleted", (req, res) => {
     });
 });
 
-// Get todo by ID
-router.get("/:id", (req, res) => {
-    const id = req.params.id;
-    Todo.findById(id, (err, todo) => {
-        res.send(todo);
-    })
-});
-
 router.post("/", (req, res) => {
     const newTodo = new Todo({
         description: req.body.description,
@@ -40,6 +32,14 @@ router.post("/", (req, res) => {
         Todo.find({}, (err, todos) => {
             res.render('pages/index', {todos: todos});
         });
+    })
+});
+
+// Get todo by ID
+router.get("/:id", (req, res) => {
+    const id = req.params.id;
+    Todo.findById(id, (err, todo) => {
+        res.send(todo);
     })
 });
 
@@ -55,11 +55,22 @@ router.post("/:description", (req, res) => {
     })
 });
 
+router.delete("/", (req, res) => {
+    const id = req.body.id;
+    Todo.findByIdAndDelete(id, (err, todo) => {
+        Todo.find({}, (err, todos) => {
+            res.render('pages/index', {todos: todos});
+        });
+    })
+});
+
 // Delete a todo by id
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
     Todo.findByIdAndDelete(id, (err, todo) => {
-        res.send(todo);
+        Todo.find({}, (err, todos) => {
+            res.render('pages/index', {todos: todos});
+        });
     })
 });
 
