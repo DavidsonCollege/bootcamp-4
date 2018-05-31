@@ -30,6 +30,19 @@ router.get("/:id", (req, res) => {
     })
 });
 
+router.post("/", (req, res) => {
+    const newTodo = new Todo({
+        description: req.body.description,
+        completedOn: null,
+        createdOn: Date.now()
+    });
+    newTodo.save().then(() => {
+        Todo.find({}, (err, todos) => {
+            res.render('pages/index', {todos: todos});
+        });
+    })
+});
+
 // Add a new todo
 router.post("/:description", (req, res) => {
     const newTodo = new Todo({

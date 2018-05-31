@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+<body>
+<h3>Todo List</h3>
+<ul>
+    <% todos.forEach(function(todo) { %>
+    <li><%= todo.description %></li>
+    <% }); %>
+</ul>
+
+<h3>Add a todo</h3>
+<form onsubmit="f(description)">
+    Description:<br>
+    <input type="text" name="description" id="description">
+    <input type="submit" value="Submit">
+</form>
+<script>
+    function f() {
+        fetch("/todo",
+            {
+                method: "post",
+                body: description,
+                headers: {"content-type": "application/json"},
+                credentials: "include"
+            })
+    }
+</script>
+</body>
+</html>
