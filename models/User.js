@@ -12,11 +12,20 @@ let UserSchema = new mongoose.Schema(
         },
         userName: {
             type: String,
-            maxlength: 100
+            maxlength: 100,
+            unique: true
+        },
+        password: {
+            type: String,
+            maxlength: 15
         },
         email: {
             type: String,
             maxlength: 100
+        },
+        key: {
+            type: String,
+            unique: true
         }
     }
 );

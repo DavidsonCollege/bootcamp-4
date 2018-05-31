@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Todo = require("mongoose").model("Todo");
+const User = require("mongoose").model("User");
+
 
 // Get all todos
 router.get("/", (req, res) => {
@@ -32,14 +34,17 @@ router.get("/:id", (req, res) => {
 
 // Add a new todo
 router.post("/:description", (req, res) => {
-    const newTodo = new Todo({
-        description: req.params.description,
-        completedOn: null,
-        createdOn: Date.now()
+    User.findOne({key: req.headers.key}, (err, result) => {
+        const newTodo = new Todo({
+            description: req.params.description,
+            completedOn: null,
+            createdOn: Date.now(),
+            userID: result._id
+        });
+        newTodo.save().then(() => {
+            res.send({status: "success"})
+        })
     });
-    newTodo.save().then(() => {
-        res.send({status: "success"})
-    })
 });
 
 // Delete a todo by id

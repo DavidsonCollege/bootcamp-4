@@ -1,23 +1,21 @@
-const passport = require("passport");
-const passportFacebook = require("passport-facebook");
 const router = require("express").Router();
+const User = require("mongoose").model("User");
+const uuid = require('uuid/v1');
 
-passport.use(new FacebookStrategy({
-        clientID: process.env.FACEBOOK_ID,
-        clientSecret: process.env.FACEBOOK_SECRET,
-        callbackURL: process.env.FACEBOOK_CALLBACK
-    },
-    function (accessToken, refreshToken, profile, cb) {
-        User.findOrCreate({facebookId: profile.id}, function (err, user) {
-            return cb(err, user);
-        });
-    }
-));
-
-router.get("/facebook", passport.authenticate('facebook'));
-
-router.get('/facebook/callback',
-    passport.authenticate('facebook', {failureRedirect: '/login'}),
-    function (req, res) {
-        res.redirect('/');
+router.post("/firstname/:fn/lastname/:ln/username/:un/password/:pw/email/:em", (req, res) => {
+    const key = uuid();
+    const newUser = new User({
+        firstName: req.params.fn,
+        lastName: req.params.ln,
+        userName: req.params.un,
+        password: req.params.pw,
+        email: req.params.em,
+        key: key
     });
+    newUser.save().then(() => {
+        res.send({status: "success",
+        key: key})
+    });
+});
+
+module.exports = router;

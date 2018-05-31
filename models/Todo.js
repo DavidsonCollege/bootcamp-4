@@ -11,6 +11,9 @@ let TodoSchema = new mongoose.Schema(
         },
         createdOn: {
             type: Date
+        },
+        userID: {
+            type: String
         }
     }
 );
