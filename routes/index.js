@@ -10,7 +10,7 @@ router.use((req, res, next) => {
     }
     else {
         User.find({key: key}, (err, result) => {
-            if(result.length === 0) {
+            if (result.length === 0) {
                 res.status(403).end();
             }
             else {
