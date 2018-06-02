@@ -12,6 +12,9 @@ var TodoSchema = new mongoose.Schema(
     },
     createdOn: {
       type: Date
+    },
+    userId:{
+      type: mongoose.Schema.Types.ObjectId
     }
   }
 );

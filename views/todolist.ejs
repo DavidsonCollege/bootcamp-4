@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TODO LIST</title>
+  </head>
+  <body>
+  <p>TODO LIST</p>
+
+<form onsubmit="add(event)">
+  <input type="text" name="description" id="description" placeholder="Write description here">
+  <input type="submit" value="ADD">
+</form>
+
+<!--REMOVE TO DO ITEM-->
+<div>
+  <ul>
+    <% for(let i = todo.length-1; i>0; i--) { %>
+        <li><%= todo[i].description %>
+        <form onsubmit="remove(event)">
+        <input type="submit" id="<%= todo[i]._id %>" value="REMOVE">
+        </form>
+        </li>
+    <% } %>
+  </ul>
+</div>
+
+
+<script>
+// REMOVE TO DO ITEM
+function remove(event){
+  event.preventDefault();
+  console.log(event);
+  let newUrl = "/new"
+  fetch(newUrl,
+  {
+    method: "DELETE",
+    headers: {"content-type":"application/json"},
+    body: JSON.stringify({description: event.target["0"].id}),
+    credentials: "include"
+  }).then(() => {location.reload()} );
+};
+
+// ADD TO DO ITEM
+function add(event){
+  event.preventDefault();
+  console.log(event);
+  let newUrl = "/new"
+  fetch(newUrl,
+  {
+    method: "POST",
+    headers: {"content-type":"application/json"},
+    body: JSON.stringify({description: event.target["0"].value}),
+    credentials: "include"
+  }).then(() => {location.reload()} );
+};
+
+</script>
+
+  </body>
+</html>
