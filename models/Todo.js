@@ -12,11 +12,15 @@ var TodoSchema = new mongoose.Schema(
     },
     createdOn: {
       type: Date
+    },
+    userId:{
+      type: mongoose.Schema.Types.ObjectId
     }
   }
 );
 mongoose.model('Todo', TodoSchema);
-// Use connect method to connect to the server
+
+// FAKER
 // MongoClient.connect(url, function(err, client) {
 //   assert.equal(null, err);
 //   console.log("Connected successfully to server");

@@ -3,7 +3,7 @@ const Todo = require("mongoose").model("Todo");
 //get all todos
 router.get("/", (req, res) => {
   Todo.find((error, todo) => {
-    res.send({ message: "I'm alive!" });
+    res.send(todo);
   });
 });
 //get all completed todos
