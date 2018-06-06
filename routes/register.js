@@ -8,7 +8,7 @@ router.post("/username/:username/password/:password/email/:email", (req, res) =>
   let myPassword = req.params.password;
   let myEmail = req.params.email;
   const myuuid = UUID();
-
+  
   let myUser = User({
     userName: myUsername,
     password: myPassword,
